@@ -7,10 +7,10 @@ import org.springframework.context.ConfigurableApplicationContext;
 
 @SpringBootApplication
 @Slf4j
-public class DataServiceStarter {
+public class TasksServiceStarter {
 
     public static void main( String[] args ) {
-        ConfigurableApplicationContext context = SpringApplication.run( DataServiceStarter.class );
+        ConfigurableApplicationContext context = SpringApplication.run( TasksServiceStarter.class );
 
         String mongodDbHost = context.getEnvironment().getProperty( "spring.data.mongodb.host" );
         String mongodDbPort = context.getEnvironment().getProperty( "spring.data.mongodb.port" );

@@ -17,5 +17,5 @@ public class TaskEntity {
 
     private String title;
 
-    private String responsibleId;
+    private Long responsibleId;
 }

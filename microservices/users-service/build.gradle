@@ -14,5 +14,9 @@ dependencies {
 
     implementation project(":scs-model")
 
-    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.postgresql:postgresql:42.3.3'
+    implementation 'org.liquibase:liquibase-core:4.9.0'
+    implementation 'org.liquibase:liquibase-groovy-dsl:3.0.2'
+
 }

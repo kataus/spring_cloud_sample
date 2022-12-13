@@ -1,13 +1,6 @@
 version: '2.1'
 
 services:
-  mongodb:
-    image: mongo:6.0.3
-    mem_limit: 512m
-    ports:
-      - "27017:27017"
-    command: mongod
-
   tasks-service:
     build: microservices/tasks-service
     mem_limit: 512m
@@ -16,6 +9,33 @@ services:
     depends_on:
       - mongodb
       - eureka
+
+  users-service:
+    build: microservices/users-service
+    mem_limit: 512m
+    environment :
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - postgres
+      - eureka
+    ports:
+      - "10011:8080"
+
+  mongodb:
+    image: mongo:6.0.3
+    mem_limit: 512m
+    ports:
+      - "27017:27017"
+    command: mongod
+
+
+  postgres:
+    image: postgres:14
+    restart: always
+    environment:
+      POSTGRES_USER: otus
+      POSTGRES_PASSWORD: otus123
+      POSTGRES_DB: otus
 
   eureka:
     build: spring-cloud/eureka-server
