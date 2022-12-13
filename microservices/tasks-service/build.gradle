@@ -1,0 +1,17 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'org.springframework.boot'
+}
+
+dependencies {
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+
+    implementation project(":scs-model")
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+}

@@ -1,0 +1,24 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'org.springframework.boot'
+}
+
+dependencies {
+    // Lombok
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    implementation "org.springframework.boot:spring-boot-starter-web"
+
+    implementation project(':scs-model')
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+task sourcesJar(type: Jar) {
+    from sourceSets.main.allJava
+    classifier = 'sources'
+}
