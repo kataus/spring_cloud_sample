@@ -1,10 +1,8 @@
 package ru.otus.scs.ts.rest;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.*;
 import ru.otus.scs.dto.Task;
 import ru.otus.scs.ts.model.TaskEntity;
 import ru.otus.scs.ts.repository.TaskRepository;
@@ -14,6 +12,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 public class TaskController {
     private final TaskRepository repository;
 
@@ -26,8 +25,9 @@ public class TaskController {
     }
 
     @PostMapping("/tasks/add")
-    public Task save( Task task ) {
+    public Task save( @RequestBody Task task ) {
         var taskEntity = new TaskEntity( task.getId(), task.getTitle(), task.getResponsibleId() );
+        log.error( "task {}, taskEntiry {}", task, taskEntity );
         taskEntity = repository.save( taskEntity );
         return new Task( taskEntity.getId(), taskEntity.getTitle(), taskEntity.getResponsibleId() );
     }

@@ -6,20 +6,39 @@ services:
     mem_limit: 512m
     environment:
       - SPRING_PROFILES_ACTIVE=docker
+      - CONFIG_SERVER_USERNAME=test_conf
+      - CONFIG_SERVER_PASSWORD=test_conf
+      - CONFIG_SERVER_URL=http://config-server:8888
     depends_on:
       - mongodb
       - eureka
+    ports:
+      - "10010:8080"
 
   users-service:
     build: microservices/users-service
     mem_limit: 512m
     environment :
       - SPRING_PROFILES_ACTIVE=docker
+      - CONFIG_SERVER_USERNAME=test_conf
+      - CONFIG_SERVER_PASSWORD=test_conf
+      - CONFIG_SERVER_URL=http://config-server:8888
     depends_on:
       - postgres
       - eureka
     ports:
       - "10011:8080"
+
+  data-logic-service:
+    build: microservices/data-logic
+    mem_limit: 512m
+    environment :
+      - SPRING_PROFILES_ACTIVE=docker
+      - CONFIG_SERVER_USERNAME=test_conf
+      - CONFIG_SERVER_PASSWORD=test_conf
+      - CONFIG_SERVER_URL=http://config-server:8888
+    ports:
+      - "10012:8080"
 
   mongodb:
     image: mongo:6.0.3
@@ -27,7 +46,6 @@ services:
     ports:
       - "27017:27017"
     command: mongod
-
 
   postgres:
     image: postgres:14
@@ -40,5 +58,30 @@ services:
   eureka:
     build: spring-cloud/eureka-server
     mem_limit: 512m
+    depends_on:
+      - config-server
+    environment:
+      - EUREKA_HOSTNAME=localhost
     ports:
       - "8761:8761"
+
+  config-server:
+    build: spring-cloud/config-server
+    mem_limit: 512m
+    environment:
+      - CONFIG_SERVER_USERNAME=test_conf
+      - CONFIG_SERVER_PASSWORD=test_conf
+      - GITLAB_CONFIG_REPOSITORY=https://github.com/kataus/spring_cloud_sample_config.git
+    ports:
+      - "8888:8888"
+
+  gateway:
+    build: spring-cloud/gateway
+    mem_limit: 512m
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - CONFIG_SERVER_USERNAME=test_conf
+      - CONFIG_SERVER_PASSWORD=test_conf
+      - CONFIG_SERVER_URL=http://config-server:8888
+    ports:
+      - "8080:8080"

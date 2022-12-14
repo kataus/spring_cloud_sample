@@ -1,7 +1,7 @@
 spring:
 
   config.import: "configserver:"
-  application.name: users-service
+  application.name: gateway
   cloud.config:
     failFast: true
     retry:

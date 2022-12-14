@@ -1,40 +1,16 @@
+spring:
 
-server.port: 7001
-server.error.include-message: always
-
-spring.application.name: tasks-service
-app.eureka-server: localhost
-
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://${app.eureka-server}:8761/eureka/
-    initialInstanceInfoReplicationIntervalSeconds: 5
-    registryFetchIntervalSeconds: 5
-  instance:
-    leaseRenewalIntervalInSeconds: 5
-    leaseExpirationDurationInSeconds: 5
-
-spring.data.mongodb:
-  host: localhost
-  port: 27017
-  database: product-db
-
-logging:
-  level:
-    root: INFO
-    se.magnus: DEBUG
-    org.springframework.data.mongodb.core.MongoTemplate: DEBUG
-
-management:
-  endpoint.health.show-details: "ALWAYS"
-  endpoints.web.exposure.include: "*"
-
----
-spring.config.activate.on-profile: docker
-
-server.port: 8080
-
-spring.data.mongodb.host: mongodb
-
-app.eureka-server: eureka
+  config.import: "configserver:"
+  application.name: tasks-service
+  cloud.config:
+    failFast: true
+    retry:
+      initialInterval: 3000
+      multiplier: 1.3
+      maxInterval: 10000
+      maxAttempts: 20
+    uri: ${CONFIG_SERVER_URL}
+    username: ${CONFIG_SERVER_USERNAME}
+    password: ${CONFIG_SERVER_PASSWORD}
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE}

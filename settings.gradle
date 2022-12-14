@@ -5,5 +5,8 @@ rootProject.name = 'spring_cloud_sample'
 include ':scs-model'
 include ':microservices:tasks-service'
 include ':microservices:users-service'
+include ':microservices:data-logic'
 
 include ':spring-cloud:eureka-server'
+include ':spring-cloud:config-server'
+include ':spring-cloud:gateway'

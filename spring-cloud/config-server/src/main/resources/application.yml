@@ -1,0 +1,23 @@
+server.port: 8888
+
+spring:
+  cloud.config:
+    label: main
+    server.git:
+      uri: ${GITLAB_CONFIG_REPOSITORY}
+      clone-on-start: true
+#      username: ${GITLAB_CONFIG_USERNAME}
+#      password: ${GITLAB_CONFIG_PASSWORD}
+      search-paths: '{application}'
+  security:
+    user.name: ${CONFIG_SERVER_USERNAME}
+    user.password: ${CONFIG_SERVER_PASSWORD}
+
+# WARNING: Exposing all management endpoints over http should only be used during development, must be locked down in production!
+management.endpoint.health.show-details: "ALWAYS"
+management.endpoints.web.exposure.include: "*"
+
+logging:
+  level:
+    root: WARN
+    org.apache.tomcat: error

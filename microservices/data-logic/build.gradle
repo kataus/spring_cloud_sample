@@ -5,20 +5,15 @@ plugins {
 }
 
 dependencies {
-    // Lombok
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 
     implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.cloud:spring-cloud-starter-config'
 
-    implementation project(':scs-model')
-}
+    implementation 'org.springdoc:springdoc-openapi-ui:1.6.9'
 
-tasks.withType(JavaCompile) {
-    options.encoding = 'UTF-8'
-}
-
-task sourcesJar(type: Jar) {
-    from sourceSets.main.allJava
-    classifier = 'sources'
+    implementation project(":scs-model")
 }
