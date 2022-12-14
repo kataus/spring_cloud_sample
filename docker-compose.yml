@@ -85,3 +85,9 @@ services:
       - CONFIG_SERVER_URL=http://config-server:8888
     ports:
       - "8080:8080"
+    depends_on:
+      - eureka
+      - config-server
+      - users-service
+      - tasks-service
+      - data-logic-service
