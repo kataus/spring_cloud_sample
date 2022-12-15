@@ -15,12 +15,10 @@ import org.springframework.context.annotation.Import;
 @Slf4j
 public class GatewayStarter {
 
-
     @Bean
     public RouteLocator customRouteLocator( RouteLocatorBuilder builder ) {
         return builder.routes()
                 .route( r -> {
-                    log.error( "psth {}", r );
                     return r.path( "/crm" )
                             .uri( "ls://data-logic" );
                         }

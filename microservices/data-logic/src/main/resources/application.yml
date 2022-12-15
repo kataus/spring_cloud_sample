@@ -14,3 +14,7 @@ spring:
     password: ${CONFIG_SERVER_PASSWORD}
   profiles:
     active: ${SPRING_PROFILES_ACTIVE}
+
+logging:
+  level:
+    root: DEBUG
